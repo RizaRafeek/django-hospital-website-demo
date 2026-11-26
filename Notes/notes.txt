@@ -1,0 +1,182 @@
+
+    project : full web page
+    app : components of the project
+
+
+    creating project:
+        django-admin startproject django_tutorial
+
+        move into the project directory
+
+    creating app:
+        python manage.py startapp home
+
+
+    running the server:
+    to see the working version of our project:
+        python manage.py runserver
+
+
+    to connect that app to the project:
+        project   ->   settings.py     ->    apps    -> add the app
+
+
+
+Django MVT:
+    django model : table in your database
+    view : python function -takes http requests and return http rsponse
+    template : html file
+                django framework efficiently handles and generates dynamically
+                HTML web pages that are visibile to the end user
+
+
+
+URL mapping and Views:
+    url : unique id used to locate a resource on the internet
+
+    url mapping : connecting to the url to its respective view 
+
+    urls.py(project)   ->   urls.py(app)    -> views.py(app)
+
+
+
+Variables and Tags:
+    variables:
+        template contain variables which get replaces with values when the template is evaluated
+        {{}}
+    tags:
+        control the logic of the template
+        conditionals and for loop
+            {% %}
+
+
+Template Inheritance:
+    allows you to build base skeleton templates that contain all the common elements of your site
+    and defines blocks that child templates can override
+
+    Inheritance:
+        {% extends "base.html" %}
+    blocks:
+        {% block content %}{% endblock %}
+
+
+Using vaiables:
+    define the variables under the function of that specific hrml file in views.py
+    use the, like mentioned above in the html files where it is needed
+
+
+Django admin:
+    This allows trusted site admins to create, edit and publish content,manage site users, perform other 
+    admin tasks
+
+    create an admin user:   
+        python manage.py createsuperuser
+
+    if it shows error, run:
+        python manage.py makemigrations
+
+        python manage.py migrate
+
+
+Django static files:
+    the web application might also need to serve additional files like images, js, css necessary to render the complete
+    web page
+    these are static files
+
+
+    to add them:
+        create seperate folders under a folder called static directly inside the root directory:
+            -css
+            -js
+            -images
+
+        add your style.css inside css
+        then  settings.py   ->    under static url   -> write STATICFILES_DIRS = [
+                                                                                   os.path.join(BASE_DIR, static) 
+                                                                                    ]
+        in base.html :
+            {% load static %}
+            <link rel="stylesheet" href="{% static '/css/style.css' %}">
+
+
+        position : relative:
+            set this container as the reference position(parent)
+        position absolute :
+            place flexibily with the css properties mentioned within the parent container
+
+
+        Assigning multiple classes to the same element:
+            "carousal-img active"
+            in css:
+                "carousal-img"  -> apply css styling   -> everything having this class will have this styling
+
+                ".carousal-img.active  -> apply this styling to only those one swhose class is "carousal-img active"
+
+            this way we can apply the common proportiex ut still give special properties to some of the elements
+
+
+
+Django models:
+    represents table in our database
+    -django create a database when we create the project
+    -models defined in app/models.pys
+
+    To create:
+        class TableName(models.Model):
+            column name = models.
+
+        then you should migrate:
+            python manage.py makemigrations
+
+            python manage.py migrate
+
+    register the models:
+        admin.py : import the models
+            admin.site.register(TableName)
+
+        then you can add your TableName table data in the admin dashboard itself
+
+
+        whenever you make any changes : dont forget to run the two commands of migrations
+
+        you have to register your models in the admin.py as well
+
+
+    to create a pop up of cards:
+        use tranform in css
+
+
+To render the model as form:
+    create a forms.py    ->    import the model and create a class with the required field names
+    views.py : add that under that specific function rendering that page
+
+
+    to create a datepicker:
+        create a class in forms.py
+        add that class as value for  key in dictionary widgets under the class Meta
+
+
+    to change the label names from the variabel to the way we want
+        create labels dictionary below widgets:
+            key : the model field name
+            value : the name we want to give the fields
+
+    tO PREVENT CSRF ATTACK DURING POSTING:
+        add csrf tag below the form which you are posting
+
+        go to views.py:
+            under the function of form:
+                mention if post what to do else to perform get
+
+
+    to create a table of the details collected from the form:
+        create a class in admin.py 
+        mention what you have to display 
+        pass that class along with that model
+
+
+
+    confirmation alert:
+        -created confirmation html
+        -under the view of booking if post:
+            made it return this message if the process reached till form.save
